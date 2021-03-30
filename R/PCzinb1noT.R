@@ -110,7 +110,10 @@ zinb1.noT <- function(X,maxcard,alpha, extend){
              beta_mu <- c(glm(X[,i]~scale(X[,c(neighbor[j], condset.temp[[k]])])
                               ,family = "poisson")$coefficients)
              gamma_pi <- rep(0.5,2+ncard)
-
+             
+            # TODO: fix beta_mu (NAs when predictors are equal; rank problem)
+             beta_mu[is.na(beta_mu)] = 0
+               
              # fit model with new edges
                fitadd <- optim_funnoT (beta_mu=beta_mu, gamma_pi, Y=X[,i],
                                     X_mu=scale(X[,c(neighbor[j], condset.temp[[k]])]), zeta[,i], n)
