@@ -62,7 +62,7 @@ zinb1.noT <- function(X,maxcard,alpha, extend){
 
                 iter <- iter+1
                  }
-
+             gc()
              return(zeta.i)
         }, silent = TRUE)
   #)
@@ -78,6 +78,7 @@ zinb1.noT <- function(X,maxcard,alpha, extend){
       r <- zinb.regression.parseModel (alpha=rep(1,2*p), A.mu=cbind(rep(1,n),scale(X[,-i])),
                                           A.pi=cbind(rep(1,n),scale(X[,-i])))
       zeta.i <- zinbOptimizeDispersion ( mu=r$logMu, logitPi=r$logitPi,Y=X[,i],n)
+    gc()
     }
   }
 
@@ -152,6 +153,7 @@ zinb1.noT <- function(X,maxcard,alpha, extend){
                     }
                   }
                 }
+              gc()
               return(adj[,i])
               }
     if (extend == TRUE){
